@@ -1,0 +1,13 @@
+ManifestFileVersion: 0
+CRC: 3324224327
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: test2.abc
+      Dependencies: {}
+    Info_1:
+      Name: test.abc
+      Dependencies: {}
+    Info_2:
+      Name: map.abc
+      Dependencies: {}
