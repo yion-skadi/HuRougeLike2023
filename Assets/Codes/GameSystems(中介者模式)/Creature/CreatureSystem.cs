@@ -29,8 +29,8 @@ public class CreatureSystem : GameSystem
     // 取得指定生物by ID
     public ICharacter GetCharacterByID(int id)
     {
-        foreach(ICharacter character in m_creatureManager.creatureList)
-            if(character.GetID() == id)
+        foreach (ICharacter character in m_creatureManager.creatureList)
+            if (character.GetID() == id)
                 return character;
 
         LogServise.Log("取得指定生物by ID 失敗, ID:" + id);
@@ -64,9 +64,9 @@ public class CreatureSystem : GameSystem
     // 產生生物地圖
     public CreMap CreateFieldMap()
     {
-       var cretureList = m_creatureManager.creatureList;
+        var cretureList = m_creatureManager.creatureList;
 
-       m_creMap = new CreMap(); // 生物ID地圖
+        m_creMap = new CreMap(); // 生物ID地圖
 
         // 待處理
         m_creMap.mapWidth = 18;
@@ -100,7 +100,7 @@ public class CreatureSystem : GameSystem
             var tempC_posX = cretureList[k].Pos.x;
             var tempC_posY = cretureList[k].Pos.y;
 
-            LogServise.Log("["+ cretureList[k].GetName() + "] 該生物id: "+ tempCreatureId + ",  所在位置:(" + cretureList[k].Pos.x + ", " + cretureList[k].Pos.y+")");
+            LogServise.Log("[" + cretureList[k].GetName() + "] 該生物id: " + tempCreatureId + ",  所在位置:(" + cretureList[k].Pos.x + ", " + cretureList[k].Pos.y + ")");
             cMap[tempC_posX, tempC_posY].creature_ID = tempCreatureId;
         }
 
@@ -111,12 +111,12 @@ public class CreatureSystem : GameSystem
     // 取得生物地圖
     public Cield[,] GetCieldMap()
     {
-        if (m_creMap.GetCieldMap() == null)
+        if (m_creMap == null || m_creMap.GetCieldMap() == null)
         {
             LogServise.Log("CieldMap is null");
             return null;
         }
-            
+
         return m_creMap.GetCieldMap();
     }
 
@@ -124,13 +124,13 @@ public class CreatureSystem : GameSystem
     // 取得生物地圖
     public Cield GetCield(int x, int y)
     {
-        if (m_creMap.GetCield(x,y) == null)
+        if (m_creMap.GetCield(x, y) == null)
         {
             LogServise.Log("Cield is null");
             return null;
         }
 
-        return m_creMap.GetCield(x,y);
+        return m_creMap.GetCield(x, y);
     }
 
     // 更新生物地圖
@@ -142,7 +142,7 @@ public class CreatureSystem : GameSystem
     // 判斷該格有沒有生物
     public bool isThatACreature(Position2D pos)
     {
-        if(m_creMap.GetCield(pos.x, pos.y).creature_ID != -1)
+        if (m_creMap.GetCield(pos.x, pos.y).creature_ID != -1)
             return true;
 
         return false;
@@ -152,7 +152,7 @@ public class CreatureSystem : GameSystem
     public List<Position2D> GetAxisCreaturePos(Position2D position)
     {
         List<Position2D> position2Ds = new List<Position2D>();
-        foreach(var pos in RangeMathf.Get8MazeRange(position))
+        foreach (var pos in RangeMathf.Get8MazeRange(position))
         {
             // 若該格有生物
             if (isThatACreature(pos))
@@ -178,6 +178,32 @@ public class CreatureSystem : GameSystem
 
     #endregion
 
+    // 取得指定格 生物ID
+    public int GetThatCreatureID(Position2D position)
+    {
+        return GetCieldMap()[position.x, position.y].creature_ID;
+    }
+
+    // 判斷指定格 生物
+    public bool isThatCreature(int _x, int _y)
+    {
+        if (GetCieldMap() == null)
+        {
+            LogServise.Log("creatureSystem.cieldMap is mull");
+            return false;
+        }
+
+        LogServise.Log("格子_生物確認: x:" + _x + "y:" + _y + ">>>>" + GetCieldMap()[_x, _y].isCreature());
+        return GetCieldMap()[_x, _y].isCreature();
+    }
+
+    // 取得指定格 生物
+    public ICharacter GetThatCreature(Position2D position)
+    {
+        int id = GetThatCreatureID(position);
+
+        return GetCharacterByID(id);
+    }
 
     #region 更新
 
@@ -201,7 +227,7 @@ public class CreatureSystem : GameSystem
         cretureList[0].UpdateAI();
 
         // 根據其他生物速度行動
-        for(int i = 1; i < cretureList.Count; i++)
+        for (int i = 1; i < cretureList.Count; i++)
         {
             cretureList[i].UpdateAI();
         }

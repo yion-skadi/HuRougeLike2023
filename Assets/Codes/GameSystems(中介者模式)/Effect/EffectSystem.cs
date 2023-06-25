@@ -19,7 +19,7 @@ public class EffectSystem : GameSystem
 
     public override void Initialize()
     {
-        base.Initialize();
+        base.Initialize();//gameMediator.GetThatCreatureID(new Position2D(2,3));
     }
 
     public override void Release()

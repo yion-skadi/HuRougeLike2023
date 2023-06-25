@@ -11,7 +11,7 @@ public class GameState_Menu : IGameState
     public GameState_Menu(GameStateController gameStateController) : base(gameStateController)
     {
         LogServise.Log("-系統階段:遊戲封面菜單-");
-    }
+    }  
 
     public override void Handle()
     {

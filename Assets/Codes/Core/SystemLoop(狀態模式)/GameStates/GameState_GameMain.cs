@@ -22,20 +22,19 @@ public class GameState_GameMain : IGameState
     {
         HuRougeLikeGame.Instance.Initialize();
 
-
     }
 
     // µ²§ô
     public override void StateEnd()
     {
         HuRougeLikeGame.Instance.Release();
+
     }
 
     // §ó·s
     public override void StateUpdate()
     {
         HuRougeLikeGame.Instance.Update();
-
 
     }
 }
